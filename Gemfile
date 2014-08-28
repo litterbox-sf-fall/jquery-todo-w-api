@@ -15,7 +15,7 @@ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'
 
-gem 'unicorn'
+#gem 'unicorn'
 
 gem 'rails_12factor', group: :production
 
@@ -35,7 +35,7 @@ gem 'jbuilder', '~> 1.2'
 group :development, :test do
   gem 'pry'
   gem 'rspec-rails'
-  gem 'unicorn-rails'
+  #gem 'unicorn-rails'
   gem 'dotenv-rails'
 end
 

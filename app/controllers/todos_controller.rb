@@ -15,7 +15,7 @@ class TodosController < ApplicationController
   # Fill in update
   def update
     set_todo
-    todo.update_attributes(todo_params)
+    @todo.update_attributes(todo_params)
 
     respond_to do |f|
       f.json {render json: {}, status: 200}

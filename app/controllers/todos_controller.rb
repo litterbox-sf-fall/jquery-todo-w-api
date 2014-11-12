@@ -1,39 +1,52 @@
 class TodosController < ApplicationController
+  before_action :set_todo, only: [:show, :update, :destroy]
+  before_action :render_main_layout_if_format_html, except: [:index]
+  respond_to :json, :html
+
+
   def index
-    @todos = Todo.all
-    respond_to do |f|
-      f.html
-      f.json { render :json => @todos, only: [:id, :title, :completed]}
-    end
+    respond_with Todo.all
   end
 
   def create
-    todo_params = params.require(:todo).permit(:title, :completed)
-    @todo = Todo.create(todo_params)
-
-    respond_to do |f|
-      f.json { render :json => @todo, only: [:id, :title, :completed] }
-    end
-  end
-
-  # Fill in destroy
-  def destroy
-    todo = Todo.find(params[:id])
-    todo.destroy
-    respond_to do |f|
-      #f.html
-      f.json { render json: {}, status: 200}
-    end
+    respond_with Todo.create(todo_params)
   end
 
   # Fill in update
   def update
-    updated_todo = params.require(:todo).permit(:completed, :title)
-    todo = Todo.find(params[:id])
-    todo.update_attributes(updated_todo)
+    set_todo
+    todo.update_attributes(todo_params)
 
     respond_to do |f|
       f.json {render json: {}, status: 200}
     end
   end
+
+  # Fill in destroy
+  def destroy
+    set_todo
+    respond_with @todo.destroy
+    # respond_to do |f|
+    #   #f.html
+    #   f.json { render json: {}, status: 200}
+    # end
+  end
+
+  private
+
+  def todo_params
+    params.require(:todo).permit(:title, :completed)
+  end
+
+  def set_todo
+    @todo = Todo.find(params[:id])
+  end
+
+  def render_main_layout_if_format_html
+    # check the request format
+    if request.format.symbol == :html
+      render "layouts/application"
+    end
+  end
+
 end

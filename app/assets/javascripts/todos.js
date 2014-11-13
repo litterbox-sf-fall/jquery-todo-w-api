@@ -8,7 +8,7 @@ $(document).ready(function(){
   };
 
   // Saved
-  $.post('/todos.json', {todo: newTodo}).done(function(data){
+  $.post('/todos.json', {todo: newTodo}).done(function(data){}
       var todoHTML = HandlebarsTemplates.todo(data);
       $("#todos").append(todoHTML);
     });
